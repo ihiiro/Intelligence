@@ -1,5 +1,13 @@
-import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
+# selenium configs
+chromedriver_location = './chromedriver'
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+driver = webdriver.Chrome(chromedriver_location, options=chrome_options)
+
+# main code
 class GatherIntel:
     """Gather intelligence from the internet."""
     def __init__(self, query, search_engine='https://www.google.com/'):
@@ -10,7 +18,8 @@ class GatherIntel:
     def initialLookup(self):
         """Look something up using specified search engine(google by default)."""
         url = 'search?q='.join([self.search_engine, self.query])
-        return requests.get(url)
+        driver.get(url)
+        return str(driver.page_source.encode('utf-8')) #return bytes in string format
 
     def constructUrl(self, start):
         """Construct urls from start string."""
@@ -25,7 +34,7 @@ class GatherIntel:
 
     def extractUrls(self):
         """Extract urls from search engine results page."""
-        response_html = self.initialLookup().text
+        response_html = self.initialLookup()
         url_list = list()
         for url in range(response_html.count(self.url_initial)):
             if url == 0:

@@ -5,6 +5,7 @@ class GatherIntel:
     def __init__(self, query, search_engine='https://www.google.com/'):
         self.query = query
         self.search_engine = search_engine
+        self.url_initial = '"https'
 
     def initialLookup(self):
         """Look something up using specified search engine(google by default)."""
@@ -26,8 +27,14 @@ class GatherIntel:
         """Extract urls from search engine results page."""
         response_html = self.initialLookup().text
         url_list = list()
-        return self.constructUrl(start=response_html[response_html.find('"https'):])
+        for url in range(response_html.count(self.url_initial)):
+            if url == 0:
+                url_list.append(self.constructUrl(start=response_html[response_html.find(self.url_initial):]))
+                continue
+            response_html = response_html.split(self.url_initial, 1)[1]
+            url_list.append(self.constructUrl(start=response_html[response_html.find(self.url_initial):]))
+        return url_list
 
-gather_intel = GatherIntel(query='the man')
+gather_intel = GatherIntel(query='ukraine russia news')
 
 print(gather_intel.extractUrls())

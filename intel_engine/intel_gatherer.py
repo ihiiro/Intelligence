@@ -14,17 +14,19 @@ class GatherIntel:
     def constructUrl(self, start):
         """Construct urls from start string."""
         constructed_url = list()
-        for c in start:
+        for c in start[1:]: # avoid the initial double quote
             # only append valid url characters
             if c.isalnum() or c in ['-','.','_','~',':','/','?','#','[',']','@','!','$','&',"'",'(',')','*','+',',',';','=']:
                 constructed_url.append(c)
+            else:
+                break
         return ''.join(constructed_url)
 
     def extractUrls(self):
         """Extract urls from search engine results page."""
         response_html = self.initialLookup().text
         url_list = list()
-        return self.constructUrl(start=response_html[response_html.find('https'):])
+        return self.constructUrl(start=response_html[response_html.find('"https'):])
 
 gather_intel = GatherIntel(query='the man')
 

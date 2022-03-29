@@ -21,18 +21,14 @@ class UrlExtractor:
         self.se_url = 'search?q='.join([self.search_engine, self.query])
 
     @contextmanager
-    def seleniumCxtmanager(self, func):
+    def seleniumCxtmanager(self):
         """Setup and Teardown ops on selenium driver."""
         driver.get(self.se_url)
         try:
-            yield func()
+            yield
         finally:
             driver.close()
             driver.quit()
-
-    def initialLookup(self):
-        """Look something up using specified search engine(google by default)."""
-        return str(driver.page_source.encode('utf-8')) #return bytes in string format
 
     def constructUrl(self, start):
         """Construct urls from start string."""
@@ -47,8 +43,8 @@ class UrlExtractor:
 
     def extractUrls(self):
         """Extract urls from search engine results page."""
-        with self.seleniumCxtmanager(func=self.initialLookup) as response_html:
-            pass
+        with self.seleniumCxtmanager():
+            response_html = str(driver.page_source.encode('utf-8')) #assign bytes in string format
         url_list = list()
         for url in range(response_html.count(self.url_initial)):
             if url == 0:

@@ -13,7 +13,7 @@ chrome_options.add_argument('--headless')
 driver = webdriver.Chrome(chromedriver_location, options=chrome_options)
 
 class UrlExtractor:
-    """Gather intelligence from the internet."""
+    """Extract intel urls from specified search engine search(default is google)."""
     def __init__(self, query, search_engine='https://www.google.com/'):
         self.query = query
         self.search_engine = search_engine

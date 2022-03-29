@@ -47,7 +47,7 @@ class UrlExtractor:
 
     def extractUrls(self):
         """Extract urls from search engine results page."""
-        with self.seleniumCxtmanager(self.initialLookup) as response_html:
+        with self.seleniumCxtmanager(func=self.initialLookup) as response_html:
             pass
         url_list = list()
         for url in range(response_html.count(self.url_initial)):

@@ -1,13 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from contextlib import contextmanager
+import pathlib
 import shutup
 
 # shut those annoying warnings
 shutup.please()
 
 # configure selenium
-chromedriver_location = './chromedriver'
+chromedriver_location = f"{next(pathlib.Path('.').glob('**/chromedriver'))}" #dinamically find chromedriver
 chrome_options = Options()
 chrome_options.add_argument('--headless')
 driver = webdriver.Chrome(chromedriver_location, options=chrome_options)

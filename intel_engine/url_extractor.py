@@ -11,7 +11,7 @@ shutup.please()
 chromedriver_location = f"{next(pathlib.Path('.').glob('**/chromedriver'))}" #dynamically find chromedriver
 chrome_options = Options()
 chrome_options.add_argument('--headless')
-driver = webdriver.Chrome(chromedriver_location, options=chrome_options)
+# driver = webdriver.Chrome(chromedriver_location, options=chrome_options)
 
 class UrlExtractor:
     """Extract intel urls from specified search engine search(default is google)."""
@@ -24,12 +24,12 @@ class UrlExtractor:
     @contextmanager
     def seleniumCxtmanager(self):
         """Setup and Teardown ops on selenium driver."""
-        driver.get(self.se_url)
+        self.driver = webdriver.Chrome(chromedriver_location, options=chrome_options)
         try:
             yield None
         finally:
-            driver.close()
-            driver.quit()
+            self.driver.close()
+            self.driver.quit()
 
     def constructUrl(self, start):
         """Construct urls from start string."""
@@ -44,8 +44,8 @@ class UrlExtractor:
 
     def extractUrls(self):
         """Extract urls from search engine results page."""
-        with self.seleniumCxtmanager():
-            response_html = str(driver.page_source.encode('utf-8')) #assign bytes in string format
+        self.driver.get(self.se_url)
+        response_html = str(self.driver.page_source.encode('utf-8')) #assign bytes in string format
         url_list = list()
         for url in range(response_html.count(self.url_initial)):
             if url == 0:

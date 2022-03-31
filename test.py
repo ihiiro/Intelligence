@@ -1,7 +1,7 @@
 from intel_engine.url_extractor import UrlExtractor
 from intel_engine.url_filter import filterUrlList
 
-extract_urls = UrlExtractor(query='rick and morty')
+extract_urls = UrlExtractor(query='riley reid')
 
 url_list = extract_urls.extractUrls()
 print(url_list)

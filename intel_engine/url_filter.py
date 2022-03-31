@@ -5,12 +5,19 @@ def filterUrlList(url_list, blacklist=['gstatic.com', 'google.com', 'google.co',
     def filterFunc(url):
         """Check if url is up and valid."""
         if url == 'https:':
-            print(f'{url} filtered out.')
+            print(f'url: "{url}"')
+            print('Filtered out.\n')
             return False
         for black in blacklist:
             if black in url:
+                print(f'url: "{url}"')
+                print('Is blacklisted, filtered out.\n')
                 return False
         with requests.get(url) as request: #with to call request.close()
-            return request.status_code == 200
+            if request.status_code == 404:
+                print(f'url: "{url}"')
+                print('Is inaccessible, filtered out.\n')
+                return False
+        return True
 
     return filter(filterFunc, url_list)

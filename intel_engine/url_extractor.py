@@ -53,4 +53,4 @@ class UrlExtractor:
                 continue
             response_html = response_html.split(self.url_initial, 1)[1]
             url_list.append(self.constructUrl(start=response_html[response_html.find(self.url_initial):]))
-        return url_list
+        return list(dict.fromkeys(url_list)) #return list with no duplicates

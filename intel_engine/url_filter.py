@@ -5,6 +5,7 @@ def filterUrlList(url_list, blacklist=['gstatic.com', 'google.com', 'google.co',
     def filterFunc(url):
         """Check if url is up and valid."""
         if url == 'https:':
+            print(f'{url} filtered out.')
             return False
         for black in blacklist:
             if black in url:

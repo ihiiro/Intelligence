@@ -8,7 +8,7 @@ import shutup
 shutup.please()
 
 # configure selenium
-chromedriver_location = f"{next(pathlib.Path('.').glob('**/chromedriver'))}" #dinamically find chromedriver
+chromedriver_location = f"{next(pathlib.Path('.').glob('**/chromedriver'))}" #dynamically find chromedriver
 chrome_options = Options()
 chrome_options.add_argument('--headless')
 driver = webdriver.Chrome(chromedriver_location, options=chrome_options)
@@ -26,7 +26,7 @@ class UrlExtractor:
         """Setup and Teardown ops on selenium driver."""
         driver.get(self.se_url)
         try:
-            yield
+            yield None
         finally:
             driver.close()
             driver.quit()

@@ -15,9 +15,9 @@ def filterUrlList(url_list, blacklist=['gstatic.com', 'google.com', 'google.co',
                     print(f'url: "{url}"')
                     print('Is inaccessible, filtered out.\n')
                     return False
-        except (requests.exceptions.MissingSchema, requests.exceptions.InvalidURL):
+        except (requests.exceptions.MissingSchema, requests.exceptions.InvalidURL, requests.exceptions.SSLError) as e:
             print(f'url: {url}')
-            print('Missing schema or Invalid url, filtered out.\n')
+            print(f'filtered out because of: {e}\n')
             return False
         return True
 

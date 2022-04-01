@@ -11,7 +11,6 @@ shutup.please()
 chromedriver_location = f"{next(pathlib.Path('.').glob('**/chromedriver'))}" #dynamically find chromedriver
 chrome_options = Options()
 chrome_options.add_argument('--headless')
-# driver = webdriver.Chrome(chromedriver_location, options=chrome_options)
 
 class UrlExtractor:
     """Extract intel urls from specified search engine search(default is google)."""

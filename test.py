@@ -2,9 +2,9 @@ from intel_engine.url_extractor import UrlExtractor
 from intel_engine.url_filter import filterUrlList
 
 # create objects
-extract_google = UrlExtractor(query='cnpp')
-extract_bing = UrlExtractor(query='cnpp', search_engine='https://www.bing.com/')
-extract_yahoo = UrlExtractor(query='cnpp', search_engine='https://www.search.yahoo.com/')
+extract_google = UrlExtractor(query='vladimir putin')
+extract_bing = UrlExtractor(query='vladimir putin', search_engine='https://www.bing.com/')
+extract_yahoo = UrlExtractor(query='vladimir putin', search_engine='https://www.search.yahoo.com/')
 
 # extract urls
 with extract_google.seleniumCxtmanager():

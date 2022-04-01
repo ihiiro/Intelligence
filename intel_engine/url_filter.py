@@ -11,11 +11,11 @@ def filterUrlList(url_list, blacklist=['gstatic.com', 'google.com', 'google.co',
                 return False
         try:
             with requests.get(url) as request: #with to call request.close()
-                if request.status_code == 404:
-                    print(f'url: "{url}"')
+                if str(request.status_code)[0] in ['4', '5']:
+                    print(f'url: "{url}", status code: {request.status_code}')
                     print('Is inaccessible, filtered out.\n')
                     return False
-        except (requests.exceptions.MissingSchema, requests.exceptions.InvalidURL, requests.exceptions.SSLError) as e:
+        except requests.exceptions.RequestException as e: #catch all requests.exceptions
             print(f'url: {url}')
             print(f'filtered out because of: {e}\n')
             return False

@@ -1,6 +1,6 @@
 import requests
 
-def filterUrlList(url_list, blacklist=['gstatic.com', 'google.com', 'google.co', 'youtube.com']):
+def filterUrlList(url_list, blacklist=['gstatic.com', 'google.com', 'google.co', 'youtube.com', 'yahoo.com', 'bing.com', 'yimg.com']):
     """Keep only useful urls."""
     def filterFunc(url):
         """Check if url is up and valid."""

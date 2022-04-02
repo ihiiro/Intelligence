@@ -13,7 +13,7 @@ def filterUrlList(url_list):
                 try:
                     if 'text/html' not in request.headers['content-type']:
                         print(f'url: "{url}", status_code: {request.status_code}')
-                        print(f'content-type: {request.headers["content-type"]}, filtered out\n')
+                        print(f'content-type: {request.headers["content-type"]}, filtered out.\n')
                         return False
                 except KeyError:
                     print(f'url: "{url}", status_code: {request.status_code}')

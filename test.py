@@ -1,13 +1,14 @@
 from intel_engine.url_extractor import UrlExtractor
 from intel_engine.url_filter import filterUrlList
 from intel_engine.intel_extractor import seleniumCxtmanager, extractData
+# from intel_engine.intel_builder import getText
 
 # create objects
-# extract_google = UrlExtractor(query='last kingdom')
-# extract_bing = UrlExtractor(query='last kingdom', search_engine='https://www.bing.com/')
-# extract_yahoo = UrlExtractor(query='last kingdom', search_engine='https://www.search.yahoo.com/')
-
-# extract urls
+extract_google = UrlExtractor(query='porn')
+# extract_bing = UrlExtractor(query='porn', search_engine='https://www.bing.com/')
+# extract_yahoo = UrlExtractor(query='porn', search_engine='https://www.search.yahoo.com/')
+#
+# # extract urls
 # with extract_google.seleniumCxtmanager():
 #     url_list_google = extract_google.extractUrls()
 #
@@ -23,4 +24,6 @@ from intel_engine.intel_extractor import seleniumCxtmanager, extractData
 # extract data
 
 with seleniumCxtmanager() as driver:
-    print(extractData(url_list=['https://www.google.com/', 'https://www.youtube.com/'], driver=driver))
+    data_list = extractData(url_list=['https://en.wikipedia.org/wiki/Computer_science'], driver=driver)
+
+print(data_list)

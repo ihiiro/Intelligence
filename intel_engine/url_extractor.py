@@ -14,7 +14,7 @@ chrome_options.add_argument('--headless')
 
 class UrlExtractor:
     """Extract intel urls from specified search engine search(default is google)."""
-    def __init__(self, query, search_engine='https://www.google.com/'):
+    def __init__(self, query='', search_engine='https://www.google.com/'):
         self.query = query
         self.search_engine = search_engine
         self.url_initial = '"https'

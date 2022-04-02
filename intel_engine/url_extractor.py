@@ -43,6 +43,7 @@ class UrlExtractor:
 
     def extractUrls(self):
         """Extract urls from search engine results page."""
+        print(f'Extracting urls from {self.se_url}...')
         self.driver.get(self.se_url)
         response_html = str(self.driver.page_source.encode('utf-8')) #assign bytes in string format
         url_list = list()

@@ -30,4 +30,5 @@ url_list = list(dict.fromkeys(url_list_bing+url_list_google+url_list_yahoo))
 
 print('\n')
 
-print(list(filterUrlList(url_list=url_list)))
+filtered_urllist = list(filterUrlList(url_list=url_list))
+print(filtered_urllist, len(filtered_urllist))

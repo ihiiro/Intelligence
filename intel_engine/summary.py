@@ -6,6 +6,7 @@ from heapq import nlargest
 def summarize(text, per):
     print('Summarizing...', end=' ')
     nlp = spacy.load('en_core_web_sm')
+    nlp.max_length = 2000000
     doc= nlp(text)
     tokens=[token.text for token in doc]
     word_frequencies={}

@@ -18,15 +18,18 @@ def extractData(url_list, driver):
     print('\033[? 25l', end='') #hide cursor
     data_list = list()
     for url in url_list:
-        print('\x1b[2K', end='') #delete previous line.
-        print(f'Extracting data from pages {int((url_list.index(url)+1)/len(url_list)*100)}%\r', end='')
         driver.get(url)
+        print('\x1b[2K', end='') #delete previous line.
+        print(f'Extracting text from each page {int((url_list.index(url)+1)/len(url_list)*100)}%\r', end='')
         try:
             data_list.append(driver.find_element_by_xpath('html/body').text)
         except selenium.common.exceptions.NoSuchElementException:
             continue
+    print('\ndone.')
+    print(f'removing unwanted text...', end=' ')
     bs = BeautifulSoup(''.join(data_list))
-    for unwanted in bs(['script', 'style']):
+    for unwanted in bs(['script', 'style', 'header', 'footer']):
         unwanted.decompose()
+    print('done.')
     print('\033[? 25h', end='') #unhide cursor
-    return bs.get_text()
+    return bs.get_text().replace('\n', ' ')

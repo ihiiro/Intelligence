@@ -43,7 +43,7 @@ class UrlExtractor:
 
     def extractUrls(self):
         """Extract urls from search engine results page."""
-        print(f'Extracting urls from {self.se_url}...')
+        print(f'Extracting urls from {self.se_url}...', end=' ')
         self.driver.get(self.se_url)
         response_html = str(self.driver.page_source.encode('utf-8')) #assign bytes in string format
         url_list = list()
@@ -53,4 +53,5 @@ class UrlExtractor:
                 continue
             response_html = response_html.split(self.url_initial, 1)[1]
             url_list.append(self.constructUrl(start=response_html[response_html.find(self.url_initial):]))
+        print('done.')
         return list(dict.fromkeys(url_list)) #return list with no duplicates

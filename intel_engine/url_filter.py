@@ -24,5 +24,5 @@ def filterUrlList(url_list):
             print(f'filtered out because of: {e}\n')
             return False
         return True
-
+        
     return filter(filterFunc, url_list)

@@ -1,6 +1,5 @@
 from contextlib import contextmanager
 from intel_engine.url_extractor import chromedriver_location, chrome_options, webdriver
-from intel_engine.summary import summarize
 from bs4 import BeautifulSoup
 import selenium
 import pathlib
@@ -24,6 +23,6 @@ def writeIntelToFiles(url_list, driver):
             for unwanted in bs(['script', 'style', 'header', 'footer']):
                 unwanted.decompose()
             with pathlib.Path(f'./intel-{url_list.index(url)}.txt').open('w') as file:
-                file.write(summarize(bs.get_text(), .5))
+                file.write(bs.get_text())
         except selenium.common.exceptions.NoSuchElementException:
             pass

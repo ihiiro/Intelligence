@@ -14,11 +14,11 @@ chrome_options.add_argument('--headless')
 
 class UrlExtractor:
     """Extract intel urls from specified search engine search(default is google)."""
-    def __init__(self, query='', search_engine='https://www.google.com/'):
+    def __init__(self, query='', extract_from='https://www.google.com/'):
         self.query = query
-        self.search_engine = search_engine
+        self.extract_from = extract_from
         self.url_initial = '"https'
-        self.se_url = 'search?q='.join([self.search_engine, self.query])
+        self.se_url = 'search?q='.join([self.extract_from, self.query])
 
     @contextmanager
     def seleniumCxtmanager(self):
@@ -41,7 +41,7 @@ class UrlExtractor:
                 break
         return ''.join(constructed_url)
 
-    def extractUrls(self):
+    def extractUrls(self, debug=False):
         """Extract urls from search engine results page."""
         self.driver.get(self.se_url)
         response_html = str(self.driver.page_source.encode('utf-8')) #assign bytes in string format
@@ -52,4 +52,8 @@ class UrlExtractor:
                 continue
             response_html = response_html.split(self.url_initial, 1)[1]
             url_list.append(self.constructUrl(start=response_html[response_html.find(self.url_initial):]))
-        return list(dict.fromkeys(url_list)) #return list with no duplicates
+            if debug:
+                print(f'{len(url_list)} urls extracted.\r', end='', flush=True)
+        url_list_no_duplicates = list(dict.fromkeys(url_list))
+        print(f'\nwithout duplicates: {len(url_list_no_duplicates)}', end='')
+        return url_list_no_duplicates

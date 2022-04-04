@@ -53,7 +53,7 @@ class UrlExtractor:
             response_html = response_html.split(self.url_initial, 1)[1]
             url_list.append(self.constructUrl(start=response_html[response_html.find(self.url_initial):]))
             if debug:
-                print(f'{len(url_list)} urls extracted.\r', end='', flush=True)
+                print(f'{len(url_list)} urls extracted from {self.se_url}\r', end='', flush=True)
         url_list_no_duplicates = list(dict.fromkeys(url_list))
         print(f'\nwithout duplicates: {len(url_list_no_duplicates)}', end='')
         return url_list_no_duplicates

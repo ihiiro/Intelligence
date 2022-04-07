@@ -18,7 +18,10 @@ def filterUrlList(url_list, debug=False):
                     return False
             with requests.get(url) as request:
                 bs = BeautifulSoup(request.text)
-                if 'en' not in bs.html['lang']:
+                try:
+                    if 'en' not in bs.html['lang']:
+                        return False
+                except (KeyError, TypeError):
                     return False
         except requests.exceptions.RequestException as e: #catch all requests.exceptions
             return False

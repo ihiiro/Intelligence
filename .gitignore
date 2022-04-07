@@ -2,3 +2,4 @@
 */__pycache__
 /to_ignore
 intel.txt
+/text-*.txt

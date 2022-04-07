@@ -2,9 +2,9 @@ from bs4 import BeautifulSoup
 import selenium
 import pathlib
 
-def getUsefulUrls(url_list, driver, debug=False):
-    """Return list of tuples containing indicative information based on the keywords.txt file."""
-    useful_urls = []
+def getUsefulText(url_list, driver, debug=False):
+    """Return list of useful text from useful urls."""
+    useful_text = []
     try:
         keywords_file_location = f"{next(pathlib.Path('.').glob('**/keywords.txt'))}"
     except StopIteration:
@@ -16,7 +16,12 @@ def getUsefulUrls(url_list, driver, debug=False):
     keywords = file_content.split(',')
     length_of_keywords_list = len(keywords)
     for url in url_list:
-        driver.get(url)
+        if debug:
+            print(f'{url_list.index(url)+1}/{len(url_list)}, {len(useful_urls)} useful.\r', end='', flush=True)
+        try:
+            driver.get(url)
+        except selenium.common.exceptions.WebDriverException: #base webdriver exception
+            continue
         try:
             bs = BeautifulSoup(driver.find_element_by_xpath('html/body').text)
         except selenium.common.exceptions.NoSuchElementException:
@@ -29,7 +34,5 @@ def getUsefulUrls(url_list, driver, debug=False):
             if keyword.lower() in bs_in_lowercase:
                 num_of_keywords_found += 1
         if num_of_keywords_found > 0:
-            useful_urls.append((url, f'{num_of_keywords_found} out of {length_of_keywords_list} keywords found.'))
-        if debug:
-            print(f'{url_list.index(url)+1}/{len(url_list)}, {len(useful_urls)} useful.\r', end='', flush=True)
-    return (useful_urls, len(useful_urls), len(url_list))
+            useful_urls.append(f'{url}:\n{bs.get_text()}\n')
+    return useful_urls

@@ -47,13 +47,13 @@ class UrlExtractor:
         response_html = str(self.driver.page_source.encode('utf-8')) #assign bytes in string format
         url_list = list()
         for url in range(response_html.count(self.url_initial)):
+            if debug:
+                print(f'{len(url_list)} urls extracted from {self.se_url}\r', end='', flush=True)
             if url == 0:
                 url_list.append(self.constructUrl(start=response_html[response_html.find(self.url_initial):]))
                 continue
             response_html = response_html.split(self.url_initial, 1)[1]
             url_list.append(self.constructUrl(start=response_html[response_html.find(self.url_initial):]))
-            if debug:
-                print(f'{len(url_list)} urls extracted from {self.se_url}\r', end='', flush=True)
         url_list_no_duplicates = list(dict.fromkeys(url_list))
         print(f'\nwithout duplicates: {len(url_list_no_duplicates)}', end='')
         return url_list_no_duplicates

@@ -1,4 +1,4 @@
-from intel_engine.intel_extractor import getUsefulUrls
+from intel_engine.intel_extractor import getUsefulText
 from intel_engine.url_extractor import UrlExtractor
 from intel_engine.url_filter import filterUrlList
 from intel_engine.context_managers import seleniumCxtmanager
@@ -8,9 +8,9 @@ import pathlib
 
 with hideUnhideCursor():
     # create objects
-    extract_google = UrlExtractor(query='bob proctor')
-    extract_yahoo = UrlExtractor(query='bob proctor', extract_from='https://www.yahoo.com/')
-    extract_bing = UrlExtractor(query='bob proctor', extract_from='https://www.bing.com/')
+    extract_google = UrlExtractor(query='anthony hopkins')
+    extract_yahoo = UrlExtractor(query='anthony hopkins', extract_from='https://www.yahoo.com/')
+    extract_bing = UrlExtractor(query='anthony hopkins', extract_from='https://www.bing.com/')
 
     # extract urls
     print('Extracting urls...')
@@ -31,14 +31,13 @@ with hideUnhideCursor():
     with printNewLineAfter():
         filtered_urllist = list(filterUrlList(url_list=url_list_google+url_list_yahoo+url_list_bing, debug=True))
 
-    # get useful urls
-    print('Getting useful urls based on the keywords.txt file...')
+    # Getting useful text
+    print('Getting useful text based on the keywords.txt file...')
     with seleniumCxtmanager() as driver:
         with printNewLineAfter():
-            useful_urls = getUsefulUrls(url_list=filtered_urllist, driver=driver, debug=True)
+            useful_text = getUsefulText(url_list=filtered_urllist, driver=driver, debug=True)
 
-    # write intel to files
-    with pathlib.Path('./intel.txt').open('a') as file:
-        for url, info in useful_urls[0]:
-            file.write(f'{url}, {info}\n')
-        file.write(f'{useful_urls[1]}/{useful_urls[2]} are useful.\n')
+    # write text to files
+    for text in useful_text:
+        with pathlib.Path(f'text-{useful_text.index(text)+1}.txt').open('w') as file:
+            file.write(text)

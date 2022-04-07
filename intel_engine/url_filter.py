@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 
 def filterUrlList(url_list, debug=False):
     """Keep only useful urls."""
@@ -14,6 +15,10 @@ def filterUrlList(url_list, debug=False):
                     if 'text/html' not in request.headers['content-type']:
                         return False
                 except KeyError:
+                    return False
+            with requests.get(url) as request:
+                bs = BeautifulSoup(request.text)
+                if 'en' not in bs.html['lang']:
                     return False
         except requests.exceptions.RequestException as e: #catch all requests.exceptions
             return False

@@ -1,5 +1,5 @@
 from intel_engine.intel_extractor import getUsefulText
-from intel_engine.url_extractor import UrlExtractor
+from intel_engine.url_extractor import extractUrls
 from intel_engine.url_filter import filterUrlList
 from intel_engine.context_managers import seleniumCxtmanager
 from intel_engine.context_managers import printNewLineAfter
@@ -7,24 +7,19 @@ from intel_engine.context_managers import hideUnhideCursor
 import pathlib
 
 with hideUnhideCursor():
-    # create objects
-    extract_google = UrlExtractor(query='bob proctor')
-    extract_yahoo = UrlExtractor(query='bob proctor', extract_from='https://www.yahoo.com/')
-    extract_bing = UrlExtractor(query='bob proctor', extract_from='https://www.bing.com/')
-
     # extract urls
     print('Extracting urls...')
-    with extract_google.seleniumCxtmanager():
+    with seleniumCxtmanager() as driver:
         with printNewLineAfter():
-            url_list_google = extract_google.extractUrls(debug=True)
+            url_list_google = extractUrls(query='elena tonra', driver=driver, debug=True)
 
-    with extract_yahoo.seleniumCxtmanager():
+    with seleniumCxtmanager() as driver:
         with printNewLineAfter():
-            url_list_yahoo = extract_yahoo.extractUrls(debug=True)
+            url_list_yahoo = extractUrls(extract_from='https://www.yahoo.com/', query='elena tonra', driver=driver, debug=True)
 
-    with extract_bing.seleniumCxtmanager():
+    with seleniumCxtmanager() as driver:
         with printNewLineAfter():
-            url_list_bing = extract_bing.extractUrls(debug=True)
+            url_list_bing = extractUrls(extract_from='https://www.bing.com/', query='elena tonra', driver=driver, debug=True)
 
     # merge all lists into one & filter
     print('Filtering through urls...')
